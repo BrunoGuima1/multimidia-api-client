@@ -1,0 +1,50 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<link rel="stylesheet" href="./assets/style.css">
+
+<div id="app">
+  <h1 class="head">Personagens Dragon Ball</h1>
+
+  <h4 class="type">Cartões</h4>
+
+  <div class="container">
+    <div v-for="person in people">
+      <div class="card">
+        <p class="card-title">{{ person.name }}</p>
+        <ul class="card-description">
+          <li>Ki Base: {{ person.ki }}</li>
+          <li>Ki Total: {{ person.maxKi }}</li>
+          <li>Raça: {{ person.race }}</li>
+          <li>Gênero: {{ person.gender }}</li>            
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script type="module">
+  const { createApp } = Vue
+
+  const API_URL = `https://dragonball-api.com/api/characters`
+
+  createApp({
+    data: () => ({
+      name: '',
+      people: []
+
+
+    }),
+    methods: {
+      async getPeople () {
+        const response = await fetch(API_URL)
+        const data = await response.json()
+
+        this.people = data.items
+      }
+    },
+    created() {
+      this.getPeople()
+    }
+  }).mount('#app')
+</script>
