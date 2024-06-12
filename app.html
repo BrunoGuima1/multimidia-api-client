@@ -8,15 +8,7 @@
 
   <div class="container">
     <div v-for="person in people">
-      <div class="card">
-        <p class="card-title">{{ person.name }}</p>
-        <ul class="card-description">
-          <li>Ki Base: {{ person.ki }}</li>
-          <li>Ki Total: {{ person.maxKi }}</li>
-          <li>Raça: {{ person.race }}</li>
-          <li>Gênero: {{ person.gender }}</li>            
-        </ul>
-      </div>
+      <card :person="person"></card>
     </div>
   </div>
 
@@ -25,6 +17,8 @@
 
 <script type="module">
   const { createApp } = Vue
+
+  import Card from './componentes/card.js'
 
   const API_URL = `https://dragonball-api.com/api/characters`
 
@@ -45,6 +39,9 @@
     },
     created() {
       this.getPeople()
+    },
+    components: {
+      Card
     }
   }).mount('#app')
 </script>
