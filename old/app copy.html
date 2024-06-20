@@ -1,0 +1,47 @@
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<link rel="stylesheet" href="./assets/style.css">
+
+<div id="app">
+  <h1 class="head">Personagens Dragon Ball</h1>
+
+  <h4 class="type">Cartões</h4>
+
+  <div class="container">
+    <div v-for="person in people">
+      <card :person="person"></card>
+    </div>
+  </div>
+
+</div>
+
+
+<script type="module">
+  const { createApp } = Vue
+
+  import Card from './componentes/card.js'
+
+  const API_URL = `http://localhost:3333/waywise`
+
+  createApp({
+    data: () => ({
+      name: '',
+      people: []
+
+
+    }),
+    methods: {
+      async getPeople () {
+        const response = await fetch(API_URL)
+        const data = await response.json()
+
+        this.people = data.items
+      }
+    },
+    created() {
+      this.getPeople()
+    },
+    components: {
+      Card
+    }
+  }).mount('#app')
+</script>
